@@ -1,12 +1,9 @@
 import { app, BrowserWindow, powerSaveBlocker } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
-import store from '../shared/store';
 import ipcMainSets from './ipcMainSets';
 
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
-
-const PROTOCOL = 'notary-remote-accept';
 
 let win: BrowserWindow;
 
@@ -20,8 +17,6 @@ const createWindow = async () => {
         height: 520,
         resizable: false,
         autoHideMenuBar: true,
-        maximizable: false,
-        fullscreenable: false,
         frame: false,
         backgroundColor: 'none',
         titleBarStyle: 'hidden',
