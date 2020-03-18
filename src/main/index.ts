@@ -13,37 +13,6 @@ let win: BrowserWindow;
 // 防止进入睡眠模式
 powerSaveBlocker.start('prevent-display-sleep');
 
-// 自定义协议打开
-const customProtocol = win => {
-    let argv = process.argv;
-    // 打开第一个窗口
-    if (argv[argv.length - 1].indexOf(PROTOCOL + '://') > -1) {
-        refreshWin(win, argv[argv.length - 1]);
-    }
-    // macos
-    app.on('open-url', function(_, args) {
-        refreshWin(win, args);
-    });
-    // windows
-    app.on('second-instance', (_, args) => {
-        refreshWin(win, args);
-    });
-};
-
-const refreshWin = (win, args) => {
-    const urlArray = args.split('?');
-    if (urlArray.length > 1) {
-        const params = urlArray[1].split(',');
-        const paramJson = {};
-        params.forEach(p => {
-            const pArray = p.split('=');
-            paramJson[pArray[0]] = pArray[1];
-        });
-        store.set('trtc-params', paramJson);
-        win.webContents.send('enterRoom', paramJson);
-    }
-};
-
 const createWindow = async () => {
     win = new BrowserWindow({
         show: false,
@@ -81,10 +50,8 @@ const createWindow = async () => {
 
     win.webContents.on('did-finish-load', () => {
         try {
-            customProtocol(win);
             win.show();
             win.focus();
-            // 置于最顶层
             win.moveTop();
         } catch (ex) {}
     });
