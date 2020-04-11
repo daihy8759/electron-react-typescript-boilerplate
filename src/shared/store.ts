@@ -1,7 +1,7 @@
 import Store from 'electron-store';
 
 const store = new Store({
-    name: 'ertb'
+    name: 'ertb',
 });
 
 export default store;

@@ -22,8 +22,8 @@ const createWindow = async () => {
         titleBarStyle: 'hidden',
         webPreferences: {
             webSecurity: false,
-            nodeIntegration: true
-        }
+            nodeIntegration: true,
+        },
     });
     ipcMainSets(win);
 
@@ -34,7 +34,7 @@ const createWindow = async () => {
             url.format({
                 pathname: path.join(__dirname, 'index.html'),
                 protocol: 'file:',
-                slashes: true
+                slashes: true,
             })
         );
     }
