@@ -1,4 +1,4 @@
-import { app, BrowserWindow, powerSaveBlocker } from 'electron';
+import { app, BrowserWindow, BrowserWindowConstructorOptions, powerSaveBlocker } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 import ipcMainSets from './ipcMainSets';
@@ -11,7 +11,7 @@ let win: BrowserWindow;
 powerSaveBlocker.start('prevent-display-sleep');
 
 const createWindow = async () => {
-    win = new BrowserWindow({
+    const mainOpts: BrowserWindowConstructorOptions = {
         show: false,
         width: 800,
         height: 520,
@@ -24,8 +24,9 @@ const createWindow = async () => {
             webSecurity: false,
             nodeIntegration: true,
         },
-    });
-    ipcMainSets(win);
+    };
+    win = new BrowserWindow(mainOpts);
+    ipcMainSets(win, mainOpts);
 
     if (process.env.NODE_ENV !== 'production') {
         win.loadURL('http://localhost:2003');
