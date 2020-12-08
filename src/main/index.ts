@@ -21,17 +21,21 @@ const createWindow = async () => {
         backgroundColor: 'none',
         titleBarStyle: 'hidden',
         webPreferences: {
-            webSecurity: false,
+            enableRemoteModule: true,
             nodeIntegration: true,
         },
     };
     win = new BrowserWindow(mainOpts);
-    ipcMainSets(win, mainOpts);
+    ipcMainSets(win);
 
     if (process.env.NODE_ENV !== 'production') {
-        win.loadURL('http://localhost:2003');
+        await win.loadURL('http://localhost:2003');
+        win.webContents.once('devtools-opened', () => {
+            win.focus();
+        });
+        win.webContents.openDevTools();
     } else {
-        win.loadURL(
+        await win.loadURL(
             url.format({
                 pathname: path.join(__dirname, 'index.html'),
                 protocol: 'file:',
@@ -43,24 +47,10 @@ const createWindow = async () => {
     win.on('closed', () => {
         win = null;
     });
-
-    win.webContents.on('did-finish-load', () => {
-        try {
-            win.show();
-            win.focus();
-            win.moveTop();
-        } catch (ex) {}
-    });
-
-    // open devTools
-    if (process.env.NODE_ENV !== 'production') {
-        win.webContents.on('did-frame-finish-load', () => {
-            win.webContents.once('devtools-opened', () => {
-                win.focus();
-            });
-            win.webContents.openDevTools();
-        });
-    }
+    try {
+        win.show();
+        win.focus();
+    } catch (ex) {}
 };
 
 app.on('ready', createWindow);

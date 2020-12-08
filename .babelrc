@@ -1,11 +1,9 @@
 {
-    "presets": ["@babel/preset-react", "@babel/typescript"],
-    "plugins": [
-        ["@babel/plugin-proposal-decorators", { "legacy": true }],
-        ["@babel/plugin-proposal-class-properties", { "loose": true }],
-        "@babel/plugin-syntax-dynamic-import",
-        ["import", { "libraryName": "antd", "style": true }],
-        "react-hot-loader/babel"
+    "presets": [
+        "@babel/preset-react",
+        "@babel/typescript"
     ],
-    "comments": true
+    "plugins": [
+        ["import", { "libraryName": "antd", "style": true }]
+    ]
 }

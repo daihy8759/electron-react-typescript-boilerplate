@@ -1,13 +1,11 @@
 import logo from 'assets/img/logo.png';
 import TitleBar from 'frameless-titlebar';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import styles from './index.less';
 import { ipcRenderer, remote } from 'electron';
 
-interface ILayoutProps extends RouteComponentProps {}
-
-const Layout: React.FC<ILayoutProps> = props => {
+const Layout: FC<RouteComponentProps> = (props) => {
     const currentWindow = remote.getCurrentWindow();
     const [maximize, setMaximize] = useState(false);
 
