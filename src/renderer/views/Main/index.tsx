@@ -1,11 +1,12 @@
+import { wordState } from '@/stores/home';
+import { Button, Typography } from 'antd';
 import React, { FC } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import useWordsModel from 'stores/useWordsModel';
+import { useRecoilState } from 'recoil';
 import * as styles from './index.module.less';
-import { Button, Typography } from 'antd';
 
 const Main: FC<RouteComponentProps> = () => {
-    const { words, setWords } = useWordsModel();
+    const [words, setWords] = useRecoilState(wordState);
     return (
         <div className={styles.default.container}>
             <Button
